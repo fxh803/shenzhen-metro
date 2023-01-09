@@ -1,0 +1,27 @@
+div.metro-month-pass-button {
+    position: absolute;
+    z-index: 1;
+    right: 588px;
+    bottom: 40;
+    width: fit-content;
+    height: fit-content;
+}
+@keyframes bgcolor{
+    from {background-color:#838383}
+    to {background-color:#0d6efd}
+    from {color:black}
+    to {color:white}
+}
+div.metro-month-pass-button .button {
+    background-color: #838383;
+    border: none;
+    height: 40px;
+    width: 80px;
+    color: black;
+    border-radius: 10px;
+}
+
+div.metro-month-pass-button .button:hover {
+    color: white;
+    animation: bgcolor 0.8s forwards;
+}

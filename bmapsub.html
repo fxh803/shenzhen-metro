@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, shrink-to-fit=no">
+    <title>bmapsub</title>
+    <script src="https://api.map.baidu.com/api?type=subway&v=1.0&ak=密钥"></script>
+    <style>
+        #mapsub {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mapsub"></div>
+    <script>
+        // 获取深圳地铁数据
+        var subwayCityName = "深圳";
+        var list = BMapSub.SubwayCitiesList;
+        var subwaycity = null;
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].name === subwayCityName) {
+                subwaycity = list[i];
+                break;
+            }
+        }
+
+        // 初始化地铁图
+        var subway = new BMapSub.Subway("mapsub", subwaycity.citycode);
+        subway.setCenter("深圳北站");
+        subway.setZoom(0.5);
+
+        // 添加缩放控件
+        var zoomControl = new BMapSub.ZoomControl({
+            anchor: BMAPSUB_ANCHOR_BOTTOM_RIGHT,
+            offset: new BMapSub.Size(20, 20)
+        });
+        subway.addControl(zoomControl);
+        // subway.enableScrollWheelZoom();
+
+        // 站点详情
+        subway.addEventListener("tap", function (e) {
+            // var nav = new BMapSub.Navigation(subway);
+            // nav.setPoint(e.station.name);
+            var detail = new BMapSub.DetailInfo(subway);
+            detail.search(e.station.name);
+            subway.setCenter(e.station.name);
+            subway.setZoom(1);
+        });
+
+        // 启用滚轮缩放
+        if (window.addEventListener)    // 火狐浏览器
+            window.addEventListener('DOMMouseScroll', wheel, false);
+        window.onmousewheel = document.onmousewheel = wheel;    // W3C
+
+        function wheel(event) {
+            var delta = 0;
+            if (!event) event = window.event;
+            if (event.wheelDelta) { // chrome使用wheelDelta，并且值为“正负120”
+                delta = event.wheelDelta / 120;
+                if (window.opera) delta = -delta;   // chrome向下滚动是负值，火狐浏览器是正值，为了处理一致性，在此取反处理
+            } else if (event.detail) {  // 火狐浏览器使用的是 detail，其值为“正负3”
+                delta = -event.detail / 3;
+            }
+            if (delta)
+                handle(delta);
+        }
+
+        function handle(delta) {
+            if (delta < 0) {
+                subway.zoomOut()
+            }
+            else {
+                subway.zoomIn()
+            }
+        }
+    </script>
+</body>
+
+</html>

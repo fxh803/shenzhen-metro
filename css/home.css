@@ -1,0 +1,33 @@
+#home {
+    width: 100%;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#home-img,
+#intro {
+    margin-bottom: 20px;
+}
+
+#home .card {
+    width: 200px;
+    margin: 0 20px 20px 0;
+}
+#home .card:last-of-type {
+    margin: 0 0 20px 0;
+}
+
+/* bootstrap 样式覆盖 */
+.accordion-button:focus,
+.accordion-button:active:focus,
+.accordion-button.active:focus,
+.accordion-button.focus,
+.accordion-button:active.focus,
+.accordion-button.active.focus {
+    box-shadow: none;
+}
+
+.accordion-item:first-of-type,
+.accordion-item:last-of-type {
+    border-radius: 0;
+}
